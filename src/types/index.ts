@@ -24,6 +24,10 @@ export interface IBuyer {
 }
 
 export interface IOrder {
-  buyer: IBuyer;
-  products: IProduct[];
+  payment: TPayment;
+  email: string;
+  phone: string;
+  address: string;
+  total: number;
+  items: string[];
 }
