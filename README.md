@@ -243,11 +243,9 @@ Presenter - презентер содержит основную логику п
 `cardButton: HTMLButtonElement` - кнопка выбора онлайн-оплаты;
 `currentPayment: "card" | "cash" | ""` - текущее состояние выбранного способа оплаты.
 Методы:
-`get isValid(): boolean` - возвращает true, если форма заполнена корректно (введён адрес и выбран способ оплаты).
-`updateValidState(): void` - обновляет состояние кнопки отправки формы.
 `selectPayment(method: "card" | "cash", callback?: (payment: "card" | "cash") => void): void` - изменяет активную кнопку выбора способа оплаты.
 `set address(value: string)` - устанавливает значение поля адреса и обновляет валидность формы.
-`set payment(value: "card" | "cash" | "")` - устанавливает активный способ оплаты.
+`set payment(value: "card" | "cash" | ""): void` - устанавливает активный способ оплаты.
 `get value(): IOrderFormData` - возвращает текущее состояние формы (адрес и выбранный способ оплаты).
 
 #### ContactsForm (форма контактных данных)
@@ -258,8 +256,6 @@ Presenter - презентер содержит основную логику п
 `emailInput: HTMLInputElement` - поле для ввода email;
 `phoneInput: HTMLInputElement` - поле для ввода номера телефона.
 Методы:
-`get isValid(): boolean` - возвращает true, если оба поля (email и телефон) заполнены.
-`updateValidState(): void` - обновляет состояние кнопки отправки формы в зависимости от валидности данных.
 `set email(value: string)` - устанавливает значение поля email и обновляет валидность формы.
 `set phone(value: string)`- устанавливает значение поля телефона и обновляет валидность формы.
 `set value(data: Partial<IContactsFormData>)` позволяет задать оба поля сразу.

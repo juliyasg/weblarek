@@ -4,7 +4,7 @@ import { IProduct } from "../../../types/index";
 import { categoryMap } from "../../../utils/constants";
 
 export interface ICardPreviewData extends ICardData, Pick<IProduct, "image" | "category" | "description"> {
-	inCart?: boolean | null; // ✅ добавили null как отдельное состояние
+	inCart?: boolean | null;
 }
 
 interface ICardPreviewActions {
