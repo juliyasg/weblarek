@@ -4,7 +4,7 @@ import { IProduct } from "../../../types/index";
 import { categoryMap } from "../../../utils/constants";
 
 export interface ICardPreviewData extends ICardData, Pick<IProduct, "image" | "category" | "description"> {
-	inCart?: boolean;
+	inCart?: boolean | null; // ✅ добавили null как отдельное состояние
 }
 
 interface ICardPreviewActions {
@@ -12,10 +12,10 @@ interface ICardPreviewActions {
 }
 
 export class CardPreview extends Card<ICardPreviewData> {
-	protected imageElement: HTMLImageElement;
-	protected categoryElement: HTMLElement;
-	protected descriptionElement: HTMLElement;
-	protected buttonElement: HTMLButtonElement;
+	private imageElement: HTMLImageElement;
+	private categoryElement: HTMLElement;
+	private descriptionElement: HTMLElement;
+	private buttonElement: HTMLButtonElement;
 
 	constructor(container: HTMLElement, actions?: ICardPreviewActions) {
 		super(container);
@@ -45,8 +45,8 @@ export class CardPreview extends Card<ICardPreviewData> {
 		this.descriptionElement.textContent = value;
 	}
 
-	set inCart(value: boolean) {
-		if (this.priceElement.textContent === "Бесценно") {
+	set inCart(value: boolean | null) {
+		if (this.price === null) {
 			this.buttonElement.disabled = true;
 			this.buttonElement.textContent = "Недоступно";
 			return;
@@ -57,6 +57,7 @@ export class CardPreview extends Card<ICardPreviewData> {
 		} else {
 			this.buttonElement.textContent = "Купить";
 		}
+
 		this.buttonElement.disabled = false;
 	}
 }

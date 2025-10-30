@@ -36,13 +36,13 @@ export class Buyer {
   }
 
   validateBuyerData(): { [key in keyof IBuyer]?: string } {
-    const errors: { [key in keyof IBuyer]?: string } = {};
-    if (!this.payment) errors.payment = 'Способ оплаты не выбран';
-    if (!this.email.trim()) errors.email = 'Email не может быть пустым';
-    if (!this.phone.trim()) errors.phone = 'Телефон не может быть пустым';
-    if (!this.address.trim()) errors.address = 'Адрес не может быть пустым';
+  const errors: { [key in keyof IBuyer]?: string } = {};
 
-    this.events.emit('buyer:validated', { errors });
-    return errors;
-  }
+  if (!this.payment) errors.payment = 'Способ оплаты не выбран';
+  if (!this.email.trim()) errors.email = 'Email не может быть пустым';
+  if (!this.phone.trim()) errors.phone = 'Телефон не может быть пустым';
+  if (!this.address.trim()) errors.address = 'Адрес не может быть пустым';
+
+  return errors;
+ }
 }

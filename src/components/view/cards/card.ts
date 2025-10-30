@@ -5,8 +5,11 @@ import { ensureElement } from "../../../utils/utils";
 export interface ICardData extends Partial<Pick<IProduct, 'id' | 'title' | 'price'>> {}
 
 export abstract class Card<T extends ICardData = ICardData> extends Component<T> {
-	protected titleElement: HTMLElement;
+	private titleElement: HTMLElement;
 	protected priceElement: HTMLElement;
+
+	private _id?: string;
+	private _price: number | null | undefined;
 
 	constructor(container: HTMLElement) {
 		super(container);
@@ -15,7 +18,10 @@ export abstract class Card<T extends ICardData = ICardData> extends Component<T>
 	}
 
 	set id(value: string) {
-		this.container.id = value;
+		this._id = value;
+	}
+	get id(): string | undefined {
+		return this._id;
 	}
 
 	set title(value: string) {
@@ -23,6 +29,10 @@ export abstract class Card<T extends ICardData = ICardData> extends Component<T>
 	}
 
 	set price(value: number | null) {
+		this._price = value;
 		this.priceElement.textContent = value === null ? 'Бесценно' : `${value} синапсов`;
+	}
+	get price(): number | null | undefined {
+		return this._price;
 	}
 }

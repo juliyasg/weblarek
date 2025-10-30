@@ -10,8 +10,8 @@ interface IFormActions {
 }
 
 export abstract class Form<T extends IFormData = IFormData> extends Component<T> {
-	protected submitButton: HTMLButtonElement;
-	protected errorElement: HTMLElement;
+	private submitButton: HTMLButtonElement;
+	private errorElement: HTMLElement;
 
 	constructor(container: HTMLElement, actions?: IFormActions) {
 		super(container);
@@ -33,6 +33,11 @@ export abstract class Form<T extends IFormData = IFormData> extends Component<T>
 
 	set error(text: string) {
 		this.errorElement.textContent = text;
+	}
+
+	showErrors(errors: Record<string, string | undefined>): void {
+		const messages = Object.values(errors).filter(Boolean) as string[];
+		this.errorElement.textContent = messages.join(', ');
 	}
 
 	clearError(): void {
