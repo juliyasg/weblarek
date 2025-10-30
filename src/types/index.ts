@@ -31,3 +31,33 @@ export interface IOrder {
   total: number;
   items: string[];
 }
+
+// Ошибки валидации форм (опционально)
+export interface IErrors {
+	payment?: string;
+	email?: string;
+	phone?: string;
+	address?: string;
+}
+
+// События для callback’ов (опциональные интерфейсы для View)
+export interface ICardActions {
+	onClick?: (event: MouseEvent) => void;
+}
+
+export interface IFormActions {
+	onSubmit?: (event: SubmitEvent) => void;
+	onInput?: (field: string, value: string) => void;
+}
+
+export interface IBasketActions {
+	onSubmit?: (event: MouseEvent) => void;
+}
+
+export interface IModalActions {
+	onClose?: () => void;
+}
+
+export interface IOrderSuccessActions {
+	onClose?: () => void;
+}

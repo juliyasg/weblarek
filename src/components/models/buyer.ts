@@ -1,18 +1,21 @@
 import { IBuyer, TPayment } from '../../types/index.ts';
+import { IEvents } from '../base/Events.ts';
 
 export class Buyer {
   payment: TPayment | null = null;
-  email: string = '';
-  phone: string = '';
-  address: string = '';
+  email = '';
+  phone = '';
+  address = '';
 
-  constructor() {}
+  constructor(private events: IEvents) {}
 
   saveBuyerData(data: Partial<IBuyer>): void {
     if (data.payment !== undefined) this.payment = data.payment;
     if (data.email !== undefined) this.email = data.email;
     if (data.phone !== undefined) this.phone = data.phone;
     if (data.address !== undefined) this.address = data.address;
+
+    this.events.emit('buyer:changed', this.getBuyerData());
   }
 
   getBuyerData(): IBuyer {
@@ -29,22 +32,17 @@ export class Buyer {
     this.email = '';
     this.phone = '';
     this.address = '';
+    this.events.emit('buyer:cleared');
   }
 
   validateBuyerData(): { [key in keyof IBuyer]?: string } {
     const errors: { [key in keyof IBuyer]?: string } = {};
-    if (!this.payment) {
-      errors.payment = 'Способ оплаты не выбран';
-    }
-    if (!this.email.trim()) {
-      errors.email = 'Email не может быть пустым';
-    }
-    if (!this.phone.trim()) {
-      errors.phone = 'Телефон не может быть пустым';
-    }
-    if (!this.address.trim()) {
-      errors.address = 'Адрес не может быть пустым';
-    }
+    if (!this.payment) errors.payment = 'Способ оплаты не выбран';
+    if (!this.email.trim()) errors.email = 'Email не может быть пустым';
+    if (!this.phone.trim()) errors.phone = 'Телефон не может быть пустым';
+    if (!this.address.trim()) errors.address = 'Адрес не может быть пустым';
+
+    this.events.emit('buyer:validated', { errors });
     return errors;
   }
 }
